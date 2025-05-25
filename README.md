@@ -1,1 +1,6 @@
 # LQTracking
+
+This paper addresses a Linear Quadratic Tracking Problem with unknown reference signals, i.e., signals exhibiting complex statistical behavior or learned from samples. Such tracking problems are computationally intensive, since the optimal solution depends on the entire future horizon of the reference signals. As a result, recent research works propose solving such problems based on data-driven approaches. Building upon these efforts, we propose a novel form for the optimal solution, for an infinite time horizon and a free final point, that utilizes direct integration of the reference signals. The core idea is to replace the need to predict the future trajectory of the unknown reference signals with the prediction of only a weighted integral of those signals. We show that by directly estimating this weighted integral, the accuracy of the optimal controller is improved, and the training time of the machine learning models is reduced substantially. A comparative analysis is conducted based on an energy management problem in a hybrid electrical vehicle. The proposed solution is compared to a typical Model-Predictive Control approach for several machine learning estimators, namely Linear Regression, Ridge Regression, Support Vector Machine, and Random Forest.
+
+
+follow [this](https://tinyurl.com/4vz9y3u9) link to acess the data files.
