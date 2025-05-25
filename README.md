@@ -1,4 +1,4 @@
-### LQTracking
+# LQTracking
 
 <p align="center">
   <img width="300" src="EV.png">
@@ -16,7 +16,7 @@ The main.m script serves as the central nervous system for our simulations. 🧠
 Following this, main.m sets the stage for machine learning. It constructs the regression matrices $H$ (features) and $yy$ (labels). The features in H are crafted from past samples of the input signal $u1$, and the corresponding label in $yy$ is the pre-computed Lap value. While the script includes a placeholder for training any Machine Learning model of your choice (such as Support Vector Machine (SVM) model (using fitrsvm)), it defaults to a straightforward linear regression ($rr = H \ yy$) to estimate the Laplace transform (Lap_est). This Lap_est is what our control system will actually use, simulating a real-world scenario where the true future is unknown and must be predicted. Finally, main.m fires up a Simulink model (main_sim) to run the control simulation using this estimated integral term and then generates a series of plots to visualize the performance, comparing key variables like stored energy ($E$), generated power ($p_g$), and the actual vs. estimated Laplace transforms. 📊
 
 
-# 🔢 MyLaplace.m: The Numerical Integration Workhorse
+### 🔢 MyLaplace.m: The Numerical Integration Workhorse
 At the heart of our "learnable integral" is the MyLaplace.m function, a dedicated numerical tool for approximating the single-sided Laplace transform of a sampled signal U at a specific real positive point a. 🏗️ This function is designed to take a vector of signal samples $U$, the sampling time $dt$, and the evaluation point a as inputs.
 
 Before diving into calculations, MyLaplace.m performs a series of sanity checks: ensuring a is real and positive, dt is positive, and there are enough samples in U to work with. Safety first! ✅ The core of the approximation involves calculating two main components: $I_{body}$ and $I_{tail}$. $I_{body}$ is computed using a formula that incorporates the signal values (Uval) and their differences (Utag - an approximation of the derivative), weighted by exponential terms (ExpVals) and coefficients ca and cb derived from the integration point a and sampling time $dt$. $I_{tail}$ provides an estimate for the contribution of the signal's tail beyond the provided samples, assuming an average value $Uavg$. These two components are then summed to give the final approximated Laplace transform value $y$. Importantly, the function includes a warning mechanism: if the absolute ratio of $I_{tail}$ to $I_{body}$ exceeds a threshold eps1, it suggests that the estimation might be inaccurate, prompting the user to potentially adjust parameters or pad the signal. This careful numerical approximation is what allows us to generate the target values our machine learning models learn to predict.
